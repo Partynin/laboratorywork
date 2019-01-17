@@ -1,5 +1,7 @@
 package partynin.labratorywork2;
 
+/** Checked */
+
 public class DuplicateSubjectException extends Exception {
     private String duplicateSubject;
 

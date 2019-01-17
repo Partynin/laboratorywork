@@ -31,7 +31,7 @@ public class SchoolboyTest {
     }
 
     @Test
-    public void getMarkValueFromRegister() {
+    public void getMarkValueFromRegister() throws DuplicateSubjectException {
         int inputMark = 4;
         String inputSubject = "History";
 
@@ -63,7 +63,7 @@ public class SchoolboyTest {
     }
 
     @Test
-    public void getSubjectsElement() {
+    public void getSubjectsElement() throws DuplicateSubjectException {
         String inputSubject = "Database Administration";
 
         String expectedSubject = "Database Administration";
@@ -76,7 +76,7 @@ public class SchoolboyTest {
     }
 
     @Test
-    public void setSubjectsValueForRegister() {
+    public void setSubjectsValueForRegister() throws DuplicateSubjectException {
         String inputSubject = "Rapid Java Application";
 
         String expectedSubject = "Rapid Java Application";
@@ -93,7 +93,7 @@ public class SchoolboyTest {
     }
 
     @Test
-    public void addSubjectAndMark() {
+    public void addSubjectAndMark() throws DuplicateSubjectException {
         String inputSubject = "Reading";
         int inputMark = 3;
 

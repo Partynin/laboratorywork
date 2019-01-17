@@ -70,7 +70,7 @@ public class StudentTest {
     }
 
     @Test
-    public void testSetSubjectsElement() {
+    public void testSetSubjectsElement() throws DuplicateSubjectException {
         String inputSubject = "OOP";
 
         String expectedSubject = "OOP";
@@ -83,7 +83,7 @@ public class StudentTest {
     }
 
     @Test
-    public void testGetSubjectsElement() {
+    public void testGetSubjectsElement() throws DuplicateSubjectException {
         String inputSubject = "Math";
 
         String expectedSubject = "Math";
@@ -100,7 +100,7 @@ public class StudentTest {
     }
 
     @Test
-    public void testAddSubjectAndMark() {
+    public void testAddSubjectAndMark() throws DuplicateSubjectException {
         String inputSubject = "Database";
         int inputMark = 5;
 

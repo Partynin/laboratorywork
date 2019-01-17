@@ -1,5 +1,7 @@
 package partynin.labratorywork2;
 
+/** Unchecked */
+
 public class MarkOutOfBoundsException extends RuntimeException {
     private int markOutOfBounds;
 

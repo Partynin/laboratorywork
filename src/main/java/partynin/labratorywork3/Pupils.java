@@ -1,5 +1,6 @@
 package partynin.labratorywork3;
 
+import partynin.labratorywork2.DuplicateSubjectException;
 import partynin.labratorywork2.Pupil;
 import partynin.labratorywork2.Student;
 
@@ -18,7 +19,7 @@ public class Pupils {
         }
     }
 
-    public static Pupil readPupil(Reader in) throws IOException {
+    public static Pupil readPupil(Reader in) throws IOException, DuplicateSubjectException {
         String name = "";
         int numberOfSubject;
 
@@ -60,7 +61,7 @@ public class Pupils {
         }
     }
 
-    public static Pupil inputPupil(InputStream in) throws IOException {
+    public static Pupil inputPupil(InputStream in) throws IOException, DuplicateSubjectException {
         int nameLength = in.read();
         byte[] b = new byte[nameLength];
         in.read(b); // Reads up to b.length bytes into array b from the input stream.

@@ -70,7 +70,7 @@ public class Schoolboy implements Pupil,Serializable, Cloneable {
 
     private boolean registersNotContain(String subject) {
         for (Register register : registers) {
-            if (register.subject == subject)
+            if (register.subject.equals(subject))
                 return false;
         }
 
@@ -102,13 +102,13 @@ public class Schoolboy implements Pupil,Serializable, Cloneable {
         private String subject;
         private int mark;
 
-        @Override
-        public int hashCode() {
+       // @Override
+        /*public int hashCode() {
             int result = mark;
             result = 31 * result + (subject != null ? subject.hashCode() : 0);
 
             return result;
-        }
+        }*/
     }
 
     @Override
@@ -140,7 +140,7 @@ public class Schoolboy implements Pupil,Serializable, Cloneable {
     private boolean subjectsAndMarksEqual(Pupil pupil) {
         if (getLength() == pupil.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                if (registers[i].subject != pupil.getSubjectsElement(i) ||
+                if (!registers[i].subject.equals(pupil.getSubjectsElement(i)) ||
                         registers[i].mark != pupil.getMarksElement(i)) {
                     return false;
                 }

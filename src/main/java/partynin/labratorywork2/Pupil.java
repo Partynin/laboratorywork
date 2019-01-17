@@ -14,11 +14,11 @@ public interface Pupil {
 
     String getSubjectsElement(int elementNumber);
 
-    void setSubjectsElement(String valueForSubjects, int elementNumber);
+    void setSubjectsElement(String valueForSubjects, int elementNumber) throws DuplicateSubjectException;
 
     void printSubjects();
 
-    void addSubjectAndMark(String subject, int mark);
+    void addSubjectAndMark(String subject, int mark) throws DuplicateSubjectException;
 
     int getLength();
 }

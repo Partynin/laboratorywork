@@ -15,68 +15,74 @@ public class Student implements Pupil, Serializable {
         subjects = new String[lengthOfArrays];
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
 
+    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @Override
     public int getMarksElement(int elementNumber) {
         return marks[elementNumber];
     }
 
+    @Override
     public void setMarksElement(int valueForElement, int elementNumber) {
-            if (valueForElement < 6 && valueForElement > 0) {
-                marks[elementNumber] = valueForElement;
-            } else
-                throw new MarkOutOfBoundsException(valueForElement);
+        if (valueForElement < 6 && valueForElement > 1) {
+            marks[elementNumber] = valueForElement;
+        } else
+            throw new MarkOutOfBoundsException(valueForElement); // Mark have to be less than 6 and more than 1
     }
 
+    @Override
     public void printMarks() {
         for (int i = 0; i < marks.length; i++) {
             System.out.print(getMarksElement(i) + " ");
         }
     }
 
+    @Override
     public String getSubjectsElement(int elementNumber) {
         return subjects[elementNumber];
     }
 
-    public void setSubjectsElement(String valueForSubjects, int elementNumber) {
-        try {
-            if (!Arrays.asList(subjects).contains(valueForSubjects)) {
-                subjects[elementNumber] = valueForSubjects;
-            } else throw new DuplicateSubjectException(valueForSubjects);
-        } catch (DuplicateSubjectException ex) {
-            System.out.println("The subjects array can't hold duplicate elements. " +
-                    "The value " + ex.getDuplicateSubject() + " is prohibited.");
-            ex.printStackTrace();
-            System.exit(2);
-        }
+    @Override
+    public void setSubjectsElement(String valueForSubjects, int elementNumber) throws DuplicateSubjectException {
+        if (Arrays.asList(subjects).contains(valueForSubjects)) {
+            throw new DuplicateSubjectException(valueForSubjects); // This subjects already exists in list
+        } else
+            subjects[elementNumber] = valueForSubjects;
     }
 
+    @Override
     public void printSubjects() {
         for (int i = 0; i < subjects.length; i++) {
             System.out.print(getSubjectsElement(i) + " ");
         }
     }
 
-    public void addSubjectAndMark(String subject, int mark) {
+    @Override
+    public void addSubjectAndMark(String subject, int mark) throws DuplicateSubjectException {
+        if (Arrays.asList(subjects).contains(subject))
+            throw new DuplicateSubjectException(subject); // This subjects already exists in list
+
+        if (mark < 1 || mark > 5)
+            throw new MarkOutOfBoundsException(mark); // Mark have to be less than 6 and more than 1
+
         int lengthOfArrays = getLength() + 1;
 
-        String[] newSubjects =
-                Arrays.copyOf(subjects, lengthOfArrays);
-        int[] newMarks = Arrays.copyOf(marks, lengthOfArrays);
-
-        subjects = newSubjects;
-        marks = newMarks;
+        subjects = Arrays.copyOf(subjects, lengthOfArrays);
+        marks = Arrays.copyOf(marks, lengthOfArrays);
 
         setSubjectsElement(subject, lengthOfArrays - 1);
         setMarksElement(mark, lengthOfArrays - 1);
     }
 
+    @Override
     public int getLength() {
         return subjects.length;
     }

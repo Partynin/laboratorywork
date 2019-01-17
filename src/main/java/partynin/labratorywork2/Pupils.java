@@ -28,6 +28,8 @@ public class Pupils {
             averageMark += pupil.getMarksElement(i);
         }
 
-        return averageMark / pupil.getLength();
+        averageMark = averageMark / pupil.getLength();
+
+        return averageMark;
     }
 }

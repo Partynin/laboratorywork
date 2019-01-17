@@ -1,5 +1,6 @@
 package partynin.labratorywork3;
 
+import partynin.labratorywork2.DuplicateSubjectException;
 import partynin.labratorywork2.Pupil;
 import partynin.labratorywork2.Schoolboy;
 import partynin.labratorywork2.Student;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 
 public class MainClass {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, DuplicateSubjectException {
         System.out.print("Enter pupils name(Ivanov): ");
         Scanner input = new Scanner(System.in);
         String nameFirstStudent = input.nextLine();
