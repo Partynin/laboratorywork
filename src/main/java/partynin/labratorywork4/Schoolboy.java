@@ -7,7 +7,7 @@ import partynin.labratorywork2.Pupil;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Schoolboy implements Pupil,Serializable, Cloneable {
+public class Schoolboy implements Pupil, Serializable, Cloneable {
     private Register[] registers;
     private String lastName;
 
@@ -19,53 +19,47 @@ public class Schoolboy implements Pupil,Serializable, Cloneable {
         }
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
 
+    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @Override
     public int getMarksElement(int registerNumber) {
         return registers[registerNumber].mark;
     }
 
+    @Override
     public void setMarksElement(int valueForMark, int registerNumber) {
-        try {
-            if (valueForMark < 6 && valueForMark > 0) {
+            if (valueForMark < 6 && valueForMark > 1) {
                 registers[registerNumber].mark = valueForMark;
             } else
                 throw new MarkOutOfBoundsException(valueForMark);
-        } catch (MarkOutOfBoundsException ex) {
-            System.out.println(
-                    "The mark value must be greater" +
-                            " than 6 and less than 0, not "
-                            + ex.getMarkOutOfBounds());
-            ex.printStackTrace();
-            System.exit(1);
-        }
     }
 
+    @Override
     public void printMarks() {
         for (int i = 0; i < registers.length; i++) {
             System.out.print(getMarksElement(i) + " ");
         }
     }
 
+    @Override
     public String getSubjectsElement(int registerNumber) {
         return registers[registerNumber].subject;
     }
 
-    public void setSubjectsElement(String valueForSubjects, int registerNumber) {
-        try {
+    @Override
+    public void setSubjectsElement(String valueForSubjects, int registerNumber) throws DuplicateSubjectException {
             if (registersNotContain(valueForSubjects))
                 registers[registerNumber].subject = valueForSubjects;
             else
                 throw new DuplicateSubjectException(valueForSubjects);
-        } catch (DuplicateSubjectException ex) {
-            ex.printStackTrace();
-        }
     }
 
     private boolean registersNotContain(String subject) {
@@ -77,38 +71,34 @@ public class Schoolboy implements Pupil,Serializable, Cloneable {
         return true;
     }
 
+    @Override
     public void printSubjects() {
         for (int i = 0; i < registers.length; i++) {
             System.out.print(getSubjectsElement(i) + " ");
         }
     }
 
-    public void addSubjectAndMark(String subject, int mark) {
-        Register[] newRegisters =
-                Arrays.copyOf(registers, getLength() + 1);
+    @Override
+    public void addSubjectAndMark(String subject, int mark) throws DuplicateSubjectException {
+        if (mark < 1 || mark > 5)
+            throw new MarkOutOfBoundsException(mark);
 
-        registers = newRegisters;
+        for (int i = 0; i < registers.length; i++){
+            if (registers[i].getSubject().equals(subject))
+                throw new DuplicateSubjectException(subject);
+        }
 
-        registers[getLength() - 1] = new Register();
-        setSubjectsElement(subject, getLength() - 1);
-        setMarksElement(mark, getLength() - 1);
+        int length = registers.length + 1;
+
+        registers = Arrays.copyOf(registers, length);
+        registers[length - 1] = new Register();
+        registers[length - 1].setSubject(subject);
+        registers[length - 1].setMark(mark);
     }
 
+    @Override
     public int getLength() {
         return registers.length;
-    }
-
-    private class Register implements Serializable {
-        private String subject;
-        private int mark;
-
-       // @Override
-        /*public int hashCode() {
-            int result = mark;
-            result = 31 * result + (subject != null ? subject.hashCode() : 0);
-
-            return result;
-        }*/
     }
 
     @Override
@@ -126,6 +116,10 @@ public class Schoolboy implements Pupil,Serializable, Cloneable {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
         boolean equalsSchoolboy = false;
 
         if (obj instanceof Pupil) {
@@ -159,11 +153,94 @@ public class Schoolboy implements Pupil,Serializable, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        // Shallow copy
-        Schoolboy schoolboyClone = (Schoolboy) super.clone();
-        // Deep copy
-        schoolboyClone.registers = registers.clone();
+        Schoolboy schoolboyClone = null;
 
+        schoolboyClone = (Schoolboy) super.clone();
+        schoolboyClone.registers = registers.clone();
+        for (int i = 0; i < getLength(); i++) {
+            schoolboyClone.registers[i] = (Register) registers[i].clone();
+        }
         return schoolboyClone;
+
+    }
+
+    class Register implements Serializable, Cloneable {
+        private String subject;
+        private int mark;
+
+        public String getSubject() {
+            return subject;
+        }
+
+        public void setSubject(String subject) {
+            this.subject = subject;
+        }
+
+        public int getMark() {
+            return mark;
+        }
+
+
+        public void setMark(int mark) {
+            if ((mark < 1) || (mark > 5)) throw new MarkOutOfBoundsException(mark);
+            this.mark = mark;
+        }
+
+        public Register() {
+            subject = "newSubject";
+            mark = 0;
+        }
+
+        public Register(String subject, int mark) {
+            if ((mark < 1) || (mark > 5)) throw new MarkOutOfBoundsException(mark);
+            this.subject = subject;
+            this.mark = mark;
+        }
+
+        @Override
+        public String toString() {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(subject);
+            stringBuffer.append(": ");
+            stringBuffer.append(mark);
+            return stringBuffer.toString();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+
+            if (obj instanceof Register) {
+                Register register = (Register) obj;
+                if (!register.getSubject().equals(getSubject())) {
+                    return false;
+                } else if (register.getMark() != getMark()) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = mark;
+            result = 31 * result + (subject != null ? subject.hashCode() : 0);
+            return result;
+        }
+
+        @Override
+        public Object clone() {
+            Register result = null;
+            try {
+                result = (Register) super.clone();
+                return result;
+            } catch (CloneNotSupportedException ex) {
+                return null;
+            }
+        }
+
     }
 }

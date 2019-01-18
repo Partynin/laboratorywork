@@ -13,6 +13,7 @@ public class MainLR2 {
             partynin.setSubjectsElement("OOP", 0);
             partynin.setSubjectsElement("Database", 1);
             partynin.setSubjectsElement("Math", 2);
+            partynin.setSubjectsElement("Math", 2);
         } catch (DuplicateSubjectException e) {
             e.printStackTrace();
         }
