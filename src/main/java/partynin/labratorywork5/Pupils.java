@@ -6,12 +6,71 @@ import partynin.labratorywork2.Schoolboy;
 import partynin.labratorywork2.Student;
 
 import java.io.*;
+<<<<<<< HEAD
 
 public class Pupils {
 
     public static Pupil createPupil(String lastName, int lengthOfArrays, Pupil pupilObject) {
 
         return null;
+=======
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+/**
+ * В классе Pupils написать метод createPupil(), который получает значение фамилии,
+ * размер массивов предметов и оценок, ссылку типа Pupil, по которой средствами рефлексии
+ * определяет реальный класс объекта, находит в нем конструктор и создает объект средствами
+ * рефлексии и того же класса, что и переданный параметр. Если конструктор с параметрами типа
+ * String и int отсутствует, то следует вернуть пустую ссылку.
+ */
+
+public class Pupils {
+
+    /* Method for task 2 */
+    public static Object createPupil(String lastName, int lengthOfArrays, Pupil objectIn) {
+
+        Class<?> classStudent = objectIn.getClass();
+
+        Constructor[] constructors = classStudent.getConstructors();
+        for (Constructor constructor : constructors) {
+            Class<?>[] params = constructor.getParameterTypes();
+            if (!params[0].toString().equals("class java.lang.String") &&
+                    !params[1].toString().equals("int"))
+                return null;
+        }
+
+        Object instance = null;
+        try {
+            Constructor<?> constructor = classStudent.getConstructor(String.class, int.class);
+            instance = constructor.newInstance(lastName, lengthOfArrays);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return instance;
+    }
+
+    /**
+     * Изменить в классе Pupils метод, возвращающий среднее арифметическое оценок ученика,
+     * так, чтобы он возвращал среднее арифметическое группы учеников
+     * (с использованием аргумента переменной длины).
+     */
+    public static double averageMark(Pupil... pupils) {
+        double averageMark = 0;
+
+        for(Pupil pupil : pupils){
+            averageMark += partynin.labratorywork3.Pupils.averageMark(pupil);
+        }
+
+        return averageMark / pupils.length;
+>>>>>>> origin/master
     }
 
     // 1
@@ -94,6 +153,7 @@ public class Pupils {
         return readStudent;
     }
 
+<<<<<<< HEAD
     public static void writePupil2(Pupil v, Writer out) throws IOException {
         PrintWriter outStream = new PrintWriter(out);
 
@@ -101,11 +161,25 @@ public class Pupils {
 
         outStream.println(v.getLength());
 
+=======
+    /** Изменить методы текстового чтения и записи класса Pupils таким образом,
+     * чтобы они использовали возможности форматированного ввода и вывода.
+     * Метод записи должен использовать метод printf(), а метод чтения - класс Scanner. */
+
+    public static void writePupil2(Pupil v, Writer out) throws IOException {
+        PrintWriter outStream = new PrintWriter(out);
+        outStream.println(v.getLastName());
+
+        outStream.println(v.getLength());
+>>>>>>> origin/master
         for (int i = 0; i < v.getLength(); i++) {
             outStream.println(v.getSubjectsElement(i));
             outStream.println(v.getMarksElement(i));
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
         outStream.flush();
     }
 
@@ -147,6 +221,7 @@ public class Pupils {
                     pupil.getMarksElement(i));
         }
     }
+<<<<<<< HEAD
 
     public static double averageMark(Pupil pupil) {
         double averageMark = 0;
@@ -159,3 +234,6 @@ public class Pupils {
     }
 }
 
+=======
+}
+>>>>>>> origin/master

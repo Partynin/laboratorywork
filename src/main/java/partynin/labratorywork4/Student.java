@@ -19,6 +19,7 @@ public class Student implements Pupil, Serializable, Cloneable {
         subjects = new String[lengthOfArrays];
     }
 
+
     @Override
     public String getLastName() {
         return lastName;
