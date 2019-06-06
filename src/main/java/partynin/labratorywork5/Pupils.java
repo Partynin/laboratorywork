@@ -1,4 +1,4 @@
-package partynin.labratorywork3;
+package partynin.labratorywork5;
 
 import partynin.labratorywork2.DuplicateSubjectException;
 import partynin.labratorywork2.Pupil;
@@ -8,6 +8,12 @@ import partynin.labratorywork2.Student;
 import java.io.*;
 
 public class Pupils {
+
+    public static Pupil createPupil(String lastName, int lengthOfArrays, Pupil pupilObject) {
+
+        return null;
+    }
+
     // 1
     public static void outputPupil(Pupil v, OutputStream out) throws IOException {
         out.write(v.getLastName().length());
@@ -152,3 +158,4 @@ public class Pupils {
         return averageMark / pupil.getLength();
     }
 }
+

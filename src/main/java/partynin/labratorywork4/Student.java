@@ -110,20 +110,20 @@ public class Student implements Pupil, Serializable, Cloneable {
 
         boolean equalsStudent = false;
 
-        if (obj instanceof Pupil) {
-            if (lastName.compareTo(((Pupil) obj).getLastName()) == 0 &&
-                    subjectsAndMarksEqual((Pupil) obj))
+        if (obj instanceof Student) {
+            if (lastName.compareTo(((Student) obj).getLastName()) == 0 &&
+                    subjectsAndMarksEqual((Student) obj))
             equalsStudent = true;
         }
 
         return equalsStudent;
     }
 
-    private boolean subjectsAndMarksEqual(Pupil pupil) {
-        if (getLength() == pupil.getLength()) {
+    private boolean subjectsAndMarksEqual(Student obj) {
+        if (getLength() == obj.getLength()) {
             for (int i = 0; i < getLength(); i++) {
-                if (subjects[i] != pupil.getSubjectsElement(i) ||
-                        marks[i] != pupil.getMarksElement(i)) {
+                if (!subjects[i].equals(obj.getSubjectsElement(i)) ||
+                        marks[i] != obj.getMarksElement(i)) {
                     return false;
                 }
             }
