@@ -6,16 +6,9 @@ import partynin.labratorywork2.Schoolboy;
 import partynin.labratorywork2.Student;
 
 import java.io.*;
-<<<<<<< HEAD
-
-public class Pupils {
-
-    public static Pupil createPupil(String lastName, int lengthOfArrays, Pupil pupilObject) {
-
-        return null;
-=======
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Scanner;
 
 /**
  * В классе Pupils написать метод createPupil(), который получает значение фамилии,
@@ -70,7 +63,6 @@ public class Pupils {
         }
 
         return averageMark / pupils.length;
->>>>>>> origin/master
     }
 
     // 1
@@ -153,54 +145,38 @@ public class Pupils {
         return readStudent;
     }
 
-<<<<<<< HEAD
-    public static void writePupil2(Pupil v, Writer out) throws IOException {
-        PrintWriter outStream = new PrintWriter(out);
 
-        outStream.println(v.getLastName());
-
-        outStream.println(v.getLength());
-
-=======
     /** Изменить методы текстового чтения и записи класса Pupils таким образом,
      * чтобы они использовали возможности форматированного ввода и вывода.
      * Метод записи должен использовать метод printf(), а метод чтения - класс Scanner. */
 
-    public static void writePupil2(Pupil v, Writer out) throws IOException {
-        PrintWriter outStream = new PrintWriter(out);
-        outStream.println(v.getLastName());
+    public static Pupil readPupil5(Reader in) throws IOException, DuplicateSubjectException {
+        Scanner inStreamScanner = new Scanner(in);
+        String lastNameScanner = inStreamScanner.nextLine();
 
-        outStream.println(v.getLength());
->>>>>>> origin/master
-        for (int i = 0; i < v.getLength(); i++) {
-            outStream.println(v.getSubjectsElement(i));
-            outStream.println(v.getMarksElement(i));
+        int markScanner;
+        String subScanner;
+
+        int lenScanner = Integer.parseInt(inStreamScanner.nextLine());
+        Pupil pupilScanner = new Schoolboy(lastNameScanner, lenScanner);
+
+        for (int i = 0; i < lenScanner; i++) {
+            subScanner = inStreamScanner.nextLine();
+            markScanner = Integer.parseInt(inStreamScanner.nextLine());
+            pupilScanner.setMarksElement(markScanner, i);
+            pupilScanner.setSubjectsElement(subScanner, i);
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
-        outStream.flush();
+        return pupilScanner;
     }
 
-    public static Pupil readPupil2(Reader in) throws IOException, DuplicateSubjectException {
-        BufferedReader inStream = new BufferedReader(in);
-
-        String lastName = inStream.readLine();
-
-        int mark;
-        String sub;
-
-        int len = Integer.parseInt(inStream.readLine());
-        Pupil pupil = new Schoolboy(lastName, len);
-
-        for (int i = 0; i < len; i++) {
-            sub = inStream.readLine();
-            mark = Integer.parseInt(inStream.readLine());
-            pupil.setMarksElement(mark, i);
-            pupil.setSubjectsElement(sub, i);
+    public static void writePupil5(Pupil pupil) {
+        String lastName = pupil.getLastName();
+        System.out.printf("Last Name %s %n", lastName);
+        for (int i = 0; i < pupil.getLength(); i++) {
+            String subject = pupil.getSubjectsElement(i);
+            int mark = pupil.getMarksElement(i);
+            System.out.printf("%s : %d %n", subject, mark);
         }
-        return pupil;
     }
 
     public static void printSubjects(Pupil pupil) {
@@ -221,7 +197,6 @@ public class Pupils {
                     pupil.getMarksElement(i));
         }
     }
-<<<<<<< HEAD
 
     public static double averageMark(Pupil pupil) {
         double averageMark = 0;
@@ -233,7 +208,3 @@ public class Pupils {
         return averageMark / pupil.getLength();
     }
 }
-
-=======
-}
->>>>>>> origin/master
