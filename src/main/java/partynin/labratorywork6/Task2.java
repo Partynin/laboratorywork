@@ -41,7 +41,7 @@ public class Task2 {
 
     class Thread1 implements Runnable {
 
-        PupilSynchronizer pupil;
+        private PupilSynchronizer pupil;
 
         Thread1(PupilSynchronizer pupil) {
             this.pupil = pupil;
@@ -60,7 +60,8 @@ public class Task2 {
     }
 
     class Thread2 implements Runnable {
-        PupilSynchronizer pupil;
+
+        private PupilSynchronizer pupil;
 
         Thread2(PupilSynchronizer pupil) {
             this.pupil = pupil;

@@ -18,10 +18,11 @@ public class Task1 {
     }
 
     public Task1() {
-        Pupil pupilPartynin = new Schoolboy("Partynin", 0);
+        Pupil pupilPartynin = new Schoolboy("Partynin", 2);
         try {
             pupilPartynin.addSubjectAndMark("OOP", 5);
             pupilPartynin.addSubjectAndMark("Math", 5);
+            pupilPartynin.addSubjectAndMark("BD", 4);
         } catch (DuplicateSubjectException e) {
             System.out.println("We have problem with duplicate subject!");
         }
@@ -30,9 +31,9 @@ public class Task1 {
         Thread2 thread2 = new Thread2(pupilPartynin);
 
         //System.out.println(thread1.getName());
-        System.out.println("Thread1 priority: " + thread1.getPriority());
-        System.out.println("Thread2 priority: " + thread2.getPriority());
-        thread1.setPriority(1);
+       // System.out.println("Thread1 priority: " + thread1.getPriority());
+       // System.out.println("Thread2 priority: " + thread2.getPriority());
+        thread1.setPriority(Thread.MIN_PRIORITY);
 
         thread1.start();
         thread2.start();
@@ -40,28 +41,28 @@ public class Task1 {
 
     class Thread1 extends Thread {
 
-        Pupil pupil;
+        private Pupil pupil;
 
         public Thread1(Pupil pupil) {
             this.pupil = pupil;
         }
 
         @Override
-        public synchronized void start() {
+        public  void run() {
             pupil.printMarks();
         }
     }
 
     class Thread2 extends Thread {
 
-        Pupil pupil;
+       private  Pupil pupil;
 
         public Thread2(Pupil pupil) {
             this.pupil = pupil;
         }
 
         @Override
-        public synchronized void start() {
+        public  void run() {
             pupil.printSubjects();
         }
     }

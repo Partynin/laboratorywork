@@ -4,6 +4,8 @@ import partynin.labratorywork2.DuplicateSubjectException;
 import partynin.labratorywork2.Pupil;
 import partynin.labratorywork4.Schoolboy;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /** Создайте два новых класса нитей (реализуют интерфейс Runnable), обеспечивающих вывод сначала всех предметов,
  *  а затем всех оценок ученика (возможен вывод сначала всех оценок,
  *  а затем всех предметов). Использовать ReentrantLock. */
@@ -11,11 +13,8 @@ import partynin.labratorywork4.Schoolboy;
 public class Task3 {
 
     public static void main(String[] args) {
-        Task3 task3 = new Task3();
-    }
+        Schoolboy pupilPartynin = new Schoolboy("Partynin", 0);
 
-    public Task3() {
-        Pupil pupilPartynin = new Schoolboy("Partynin", 0);
         try {
             pupilPartynin.addSubjectAndMark("OOP", 5);
             pupilPartynin.addSubjectAndMark("Math", 4);
@@ -25,49 +24,14 @@ public class Task3 {
             System.out.println("We have problem with duplicate subject!");
         }
 
-        PupilReentrantLock pupilReentrantLock = new PupilReentrantLock(pupilPartynin);
+        ReentrantLock lock = new ReentrantLock();
 
-        Task3.Thread1 thread1Runnable = new Task3.Thread1(pupilReentrantLock);
-        Task3.Thread2 thread2Runnable = new Task3.Thread2(pupilReentrantLock);
-        Thread thread1 = new Thread(thread1Runnable);
-        Thread thread2 = new Thread(thread2Runnable);
+        Runnable thread1Reentrant = new Thread1Reentrant(pupilPartynin, lock);
+        Runnable thread2Reentrant = new Thread2Reentrant(pupilPartynin, lock);
+        Thread thread1 = new Thread(thread1Reentrant);
+        Thread thread2 = new Thread(thread2Reentrant);
 
         thread1.start();
         thread2.start();
-    }
-
-    class Thread1 implements Runnable {
-
-        PupilReentrantLock pupil;
-
-        Thread1(PupilReentrantLock pupil) {
-            this.pupil = pupil;
-        }
-
-        @Override
-        public void run() {
-            try {
-                    pupil.printSubject();
-            } catch (InterruptedException e) {
-                System.out.println("We have problem in method run Thread1 class!");
-            }
-        }
-    }
-
-    class Thread2 implements Runnable {
-        PupilReentrantLock pupil;
-
-        Thread2(PupilReentrantLock pupil) {
-            this.pupil = pupil;
-        }
-
-        @Override
-        public void run() {
-            try {
-                    pupil.printMark();
-            } catch (InterruptedException e) {
-                System.out.println("We have problem in method run Thread2 class!");
-            }
-        }
     }
 }
