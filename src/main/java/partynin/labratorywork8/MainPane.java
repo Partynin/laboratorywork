@@ -47,7 +47,7 @@ public class MainPane extends Application {
         paneTextAreaView.setCenter(textAreaView);
         paneTextAreaView.setPadding(new Insets(10, 10, 0, 10));
 
-
+        textAreaView.setEditable(false);
         textAreaView.setFont(Font.font("Times", 12));
 
         // Панель для размещения кнопок
